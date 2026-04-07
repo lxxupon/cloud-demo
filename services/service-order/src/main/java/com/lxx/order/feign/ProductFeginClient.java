@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
-@FeignClient(value = "service-product", path = "/api/product", fallback = ProductFeginClientFallBack.class) // fegin客户端,自动负载均衡
+@FeignClient(value = "service-product",
+//        path = "/api/product",
+        fallback = ProductFeginClientFallBack.class) // fegin客户端,自动负载均衡
 public interface ProductFeginClient {
 
     @GetMapping("/product/{id}")

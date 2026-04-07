@@ -3,12 +3,39 @@ spring:
     gateway:
       server:
         webflux:
+          default-filters: # 默认过滤器，与global过滤器的区别？
+            - AddResponseHeader=X-Response-Default-Red, Default-Blue
           routes:
+#            - id: bing-route
+#              uri: https://cn.bing.com
+#              predicates: # 多个匹配条件时，多个条件之间是and关系
+#                - name: Path
+#                  args:
+#                    pattern: /search
+#                - name: Query
+#                  args:
+#                    param: q
+#                    regexp: haha
+#                - Vip=user,lxxupon
+#              order: 0
             - id: order-route
               uri: lb://service-order
               predicates:
-                - Path=/api/order/**
+                - name: Path
+                  args:
+                    pattern: /api/order/**
+                    matchTrailingSlash: true # 是否匹配尾部斜杠
+              filters:
+                - name: RewritePath # 路径重写过滤器
+                  args:
+                    regexp: /api/order/?(?<segment>.*)
+                    replacement: /$\{segment}
+                - AddResponseHeader=X-Response-STR, 123
+              order: 0
             - id: product-route
               uri: lb://service-product
               predicates:
                 - Path=/api/product/**
+              order: 0
+              filters:
+                - RewritePath=/api/product/?(?<segment>.*), /$\{segment}

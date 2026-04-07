@@ -10,16 +10,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 //@RefreshScope
 @RestController
-@RequestMapping("/api/order")
+//@RequestMapping("/api/order")
 public class OrderController {
 
     @Autowired
@@ -87,6 +87,11 @@ public class OrderController {
     // 测试sentinel-流量规则-流控模式-关联模式
     @GetMapping("/read-db")
     public R readDb() {
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         return R.ok("read DB success...");
     }
 
