@@ -1,0 +1,28 @@
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            loggerLevel: full
+            connectTimeout: 1000
+            readTimeout: 3000
+          service-product:
+            connectTimeout: 5000
+            readTimeout: 5000
+            loggerLevel: full
+          #重试策略设置
+#          retryer: fegin.retryer.Default
+          # 拦截器设置
+#          request-intercepters:
+#            - com.lxx.order.intercepter.XTokenRequestIntercepter
+    sentinel:
+      transport:
+        dashboard: localhost:8099
+      eager: true
+
+
+feign:
+  sentinel:
+    enabled: true
+

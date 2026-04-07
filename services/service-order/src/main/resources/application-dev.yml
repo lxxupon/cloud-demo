@@ -1,0 +1,20 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: service-order
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      user-name: nacos
+      password: nacos
+      config:
+        namespace: dev
+  config:
+    import:
+      - nacos:common.properties?group=order
+      - optional:nacos:database.properties?group=order
+
+logging:
+  level:
+    com.lxx.order.feign: debug

@@ -1,0 +1,22 @@
+server:
+  port: 9100
+spring:
+  application:
+    name: service-product
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      user-name: nacos
+      password: nacos
+      config:
+        namespace: prod
+  config:
+    import-check:
+      enabled: false
+    import:
+      - nacos:common.properties?group=product
+
+logging:
+  level:
+    com.lxx.product.feign: debug
+
