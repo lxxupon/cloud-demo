@@ -2,7 +2,7 @@ package com.lxx.order.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.google.common.collect.Lists;
-import com.lxx.common.R;
+import com.lxx.common.ResultData;
 import com.lxx.order.config.OrderProperties;
 import com.lxx.order.entity.Order;
 import com.lxx.order.service.OrderService;
@@ -86,18 +86,18 @@ public class OrderController {
 
     // 测试sentinel-流量规则-流控模式-关联模式
     @GetMapping("/read-db")
-    public R readDb() {
+    public ResultData readDb() {
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        return R.ok("read DB success...");
+        return ResultData.success("read DB success...");
     }
 
     @GetMapping("/write-db")
-    public R writeDb() {
-        return R.ok("write DB success...");
+    public ResultData writeDb() {
+        return ResultData.success("write DB success...");
     }
 
 }

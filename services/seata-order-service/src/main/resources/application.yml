@@ -1,0 +1,39 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      config:
+        import-check:
+          enabled: true
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+  config:
+    import: # 导入配置，顺序从前后加载，注意！！！
+      - nacos:datasource.yaml
+      - nacos:${spring.application.name}-mysql.yaml?group=order
+      - nacos:seata-common.yaml
+
+
+# ========================mybatis===================
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.lxx.cloud.entities
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+
+logging:
+  level:
+    com.alibaba.nacos.client: DEBUG
+    com.alibaba.cloud.nacos: DEBUG

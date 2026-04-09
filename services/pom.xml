@@ -11,9 +11,11 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>service-order</module>
-        <module>service-product</module>
-
+<!--        <module>service-order</module>-->
+<!--        <module>service-product</module>-->
+        <module>seata-account-service</module>
+        <module>seata-order-service</module>
+        <module>seata-storage-service</module>
     </modules>
 
     <artifactId>services</artifactId>
@@ -23,9 +25,86 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <guava.version>33.5.0-jre</guava.version>
+        <mysql.version>8.0.31</mysql.version>
+
     </properties>
 
     <dependencies>
+        <!-- 该依赖 javax.persistence:persistence-api 是 JPA (Java Persistence API) 的规范接口包。
+             它定义了持久化相关的注解（如 @Entity, @Table, @Id 等）和核心接口。
+             在 Spring Boot 3.x 和 Jakarta EE 9+ 环境中，通常建议使用 jakarta.persistence:jakarta.persistence-api 替代旧的 javax 包，
+             除非项目中的某些旧库（如特定版本的 tk.mybatis）仍强依赖 javax 命名空间。
+             如果项目中使用了 Hibernate 或其他 JPA 实现，通常不需要显式声明此依赖，因为实现库会传递引入它。
+             在此处保留它是为了兼容可能依赖 javax.persistence 注解的代码或库。 -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+
+        <!--Mysql数据库驱动 -->
+<!--        <dependency>-->
+<!--            <groupId>com.mysql</groupId>-->
+<!--            <artifactId>mysql-connector-j</artifactId>-->
+<!--            <version>${mysql.version}</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.49</version> <!-- 针对 MySQL 5.6 的最佳选择 -->
+        </dependency>
+
+        <!--SpringBoot集成mybatis-->
+<!--        <dependency>-->
+<!--            <groupId>org.mybatis.spring.boot</groupId>-->
+<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--        </dependency>-->
+        <!-- 1. 升级 mybatis-spring-boot-starter 到 3.0.4 或更高版本 -->
+        <!-- 这个 Starter 会自动管理并引入兼容的 mybatis 核心包 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+
+        <!-- 2. 你的 tk.mybatis 依赖，保持排除旧版本 mybatis-spring 的设置 -->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>4.3.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis-spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- 3. 确保显式引入的 mybatis-spring 版本也足够新 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+
+        <!--SpringBoot集成druid连接池-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid-spring-boot-starter</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-3-starter</artifactId>
+            <version>1.2.27</version>
+        </dependency>
+
+
+        <!-- 分布式事务 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+        </dependency>
+
         <!-- 服务发现-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -77,6 +156,7 @@
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

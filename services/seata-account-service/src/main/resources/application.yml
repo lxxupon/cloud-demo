@@ -1,0 +1,41 @@
+server:
+  port: 2003
+
+spring:
+  application:
+    name: seata-account-service
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      server-addr: 127.0.0.1:8848
+      config:
+        import-check:
+          enabled: true
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+  config:
+    import:
+      - optional:nacos:datasource.yaml
+      - optional:nacos:${spring.application.name}-mysql.yaml?group=account
+      - optional:nacos:seata-common.yaml
+
+# ========================mybatis===================
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.lxx.cloud.entities
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+
+logging:
+  level:
+    com.alibaba.druid: DEBUG
+    com.mysql: DEBUG
+    com.alibaba.nacos.client: DEBUG
+    com.alibaba.cloud.nacos: DEBUG
