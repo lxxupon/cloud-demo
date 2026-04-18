@@ -18,8 +18,8 @@ spring:
 #            - com.lxx.order.intercepter.XTokenRequestIntercepter
     sentinel:
       transport:
-        dashboard: localhost:8099
-        port: 8719
+        dashboard: localhost:8099  # Sentinel控制台地址
+        port: 8719 # 应用端监听端口（与控制台通信），不同应用不一样
       datasource:
         flow-rule: #流控规则管理(这个名称可以自定义)
           nacos: # 告诉sentinel用nacos作为数据源

@@ -1,0 +1,48 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          globalcors: #跨域配置
+            cors-configurations:
+              '[/**]':
+                allowed-origin-patterns: '*'
+                allowed-headers: '*'
+                allowed-methods: '*'
+          default-filters: # 默认过滤器，与global过滤器的区别？
+            - AddResponseHeader=X-Response-Default-Red, Default-Blue
+          routes:
+            - id: bing-route
+              uri: https://cn.bing.com
+              predicates: # 多个匹配条件时，多个条件之间是and关系
+                - name: Path
+                  args:
+                    pattern: /search
+                - name: Query
+                  args:
+                    param: q
+                    regexp: haha
+                - Vip=user,lxxupon
+              order: 100
+            - id: order-route
+              uri: lb://service-order
+              predicates:
+                - name: Path
+                  args:
+                    pattern: /api/order/**
+                    matchTrailingSlash: true # 是否匹配尾部斜杠
+              filters:
+                - name: RewritePath # 路径重写过滤器
+                  args:
+                    regexp: /api/order/?(?<segment>.*)
+                    replacement: /$\{segment}
+                - AddResponseHeader=X-Response-STR, 123
+                - OnceToken=X-Response-Token, uuid
+              order: 0
+            - id: product-route
+              uri: lb://service-product
+              predicates:
+                - Path=/api/product/**
+              order: 0
+              filters:
+                - RewritePath=/api/product/?(?<segment>.*), /$\{segment}
