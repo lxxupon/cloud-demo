@@ -20,13 +20,13 @@ Spring Cloud 微服务架构 Demo
 cloud-demo/
 ├── pom.xml                    # 父POM
 ├── services/                  # 微服务模块
-│   ├── service-order/         # 订单服务
-│   ├── service-product/       # 商品服务
 │   ├── seata-order-service/   # Seata订单服务
 │   ├── seata-account-service/ # Seata账户服务
-│   └── seata-storage-service/ # Seata库存服务
+│   ├── seata-storage-service/ # Seata库存服务
+│   └── seata-product-service/ # Seata商品服务
 ├── model/                     # 公共模型
-└── gateway/                  # 网关服务
+├── gateway/                   # 网关服务
+└── common-swagger/           # Swagger配置
 ```
 
 ## 快速开始
@@ -46,6 +46,8 @@ mvn clean install
 
 ### 服务端口
 
-- service-order: 8080
-- service-product: 8081
+- seata-order-service: 8080
+- seata-account-service: 8081
+- seata-storage-service: 8082
+- seata-product-service: 8083
 - gateway: 8082

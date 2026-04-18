@@ -38,6 +38,165 @@
             <artifactId>lombok</artifactId>
             <scope>annotationProcessor</scope>
         </dependency>
+
+        <!-- 网关使用 WebFlux 版本 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
     </dependencies>
 
+    <build>
+        <finalName>gateway-1.0</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+
+            <!--**********分离资源文件及依赖包打包配置*************-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/lib</outputDirectory>
+                            <excludeTransitive>false</excludeTransitive>
+                            <stripVersion>false</stripVersion>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <!--<version>3.1.0</version>-->
+                <configuration>
+                    <includeEmptyDirs>true</includeEmptyDirs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+
+                    <excludes>
+                        <!-- <exclude>**/ip2region/**</exclude>-->
+                        <exclude>**/mapper/**</exclude>
+                        <exclude>**/generator/**</exclude>
+                        <exclude>**/static/**</exclude>
+                        <exclude>**/templates/**</exclude>
+                        <exclude>**/*.yml</exclude>
+                        <exclude>**/*.xml</exclude>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.json</exclude>
+                        <exclude>**/*.jks</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                    <layout>ZIP</layout>
+                    <includes>
+                        <include>
+                            <groupId>non-exists</groupId>
+                            <artifactId>non-exists</artifactId>
+                        </include>
+                    </includes>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>classes</classifier>
+                            <attach>false</attach>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+
+                            <target>
+                                <property name="dist">target/build</property>
+                                <property name="res">target/build/resources</property>
+                                <property name="app-name">${project.build.finalName}</property>
+
+                                <delete dir="${dist}"/>
+                                <mkdir dir="${dist}"/>
+                                <mkdir dir="${res}"/>
+
+                                <!-- 复制应用程序jar包 -->
+                                <copy todir="${dist}" overwrite="true" file="target/${app-name}.jar"/>
+
+                                <!-- 移动shell脚本 -->
+                                <move todir="${dist}" overwrite="true">
+                                    <fileset dir="target/classes/bin/"/>
+                                </move>
+
+                                <!-- 移动dockerfile脚本 -->
+                                <move todir="${dist}" overwrite="true">
+                                    <fileset dir="target/classes/docker/"/>
+                                </move>
+
+                                <!-- 移动maven依赖jar包 -->
+                                <move todir="${dist}/lib" overwrite="true">
+                                    <fileset dir="target/lib"/>
+                                </move>
+
+                                <!-- 移动应用程序资源文件 -->
+                                <copy todir="${res}" overwrite="true">
+                                    <fileset dir="target/classes">
+                                        <!-- <include name="**/ip2region/**"/>-->
+                                        <include name="**/mapper/**"/>
+                                        <include name="**/generator/**"/>
+                                        <include name="**/static/**"/>
+                                        <include name="**/templates/**"/>
+                                        <include name="**/*.yml"/>
+                                        <include name="**/*.xml"/>
+                                        <include name="**/*.json"/>
+                                        <include name="**/*.properties"/>
+                                        <include name="**/*.jks"/>
+                                    </fileset>
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

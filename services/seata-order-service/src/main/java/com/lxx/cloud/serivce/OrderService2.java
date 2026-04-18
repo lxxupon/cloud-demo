@@ -1,9 +1,9 @@
-package com.lxx.order.service;
+package com.lxx.cloud.serivce;
 
 import com.lxx.order.entity.Order;
 import com.lxx.product.entity.Product;
 
-public interface OrderService {
+public interface OrderService2 {
     Order createOrder(Long productId, Long userId);
 
     Product getProductFromRemote(Long productId);

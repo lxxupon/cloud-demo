@@ -9,7 +9,7 @@
 #======================================================================
 
 # 项目名称
-APPLICATION="mcs-gw-1.0.jar"
+APPLICATION="gateway-1.0.jar"
 
 # 项目启动jar包名称
 APPLICATION_JAR="${APPLICATION}"

@@ -9,7 +9,7 @@
 #======================================================================
 
 # 项目名称
-APPLICATION="mcs-gw-1.0.jar"
+APPLICATION="gateway-1.0.jar"
 
 # 停服
 echo stop ${APPLICATION} Application...

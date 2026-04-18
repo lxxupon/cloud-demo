@@ -1,20 +1,20 @@
 server:
-  port: 9100
+  port: 2004
 spring:
   application:
-    name: service-product
+    name: seata-product-service
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
       user-name: nacos
       password: nacos
       config:
-        namespace: dev
+        namespace: public
   config:
     import-check:
       enabled: false
     import:
-      - nacos:common.properties?group=product
+      - optional:nacos:common.properties?group=product
 
 logging:
   level:

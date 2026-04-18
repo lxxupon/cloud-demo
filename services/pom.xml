@@ -11,8 +11,7 @@
 
     <packaging>pom</packaging>
     <modules>
-<!--        <module>service-order</module>-->
-<!--        <module>service-product</module>-->
+        <module>seata-product-service</module>
         <module>seata-account-service</module>
         <module>seata-order-service</module>
         <module>seata-storage-service</module>
@@ -26,10 +25,22 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <guava.version>33.5.0-jre</guava.version>
         <mysql.version>8.0.31</mysql.version>
-
+        <redisson.version>3.52.0</redisson.version>
     </properties>
 
     <dependencies>
+        <!-- 1. Spring Data Redis，默认使用 Lettuce 客户端 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- 2. Redisson Starter，用于分布式锁等高级功能 -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>${redisson.version}</version>
+        </dependency>
+
         <!-- 该依赖 javax.persistence:persistence-api 是 JPA (Java Persistence API) 的规范接口包。
              它定义了持久化相关的注解（如 @Entity, @Table, @Id 等）和核心接口。
              在 Spring Boot 3.x 和 Jakarta EE 9+ 环境中，通常建议使用 jakarta.persistence:jakarta.persistence-api 替代旧的 javax 包，
@@ -135,6 +146,13 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.lxx</groupId>
+            <artifactId>common-swagger</artifactId>
+            <scope>compile</scope>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- 负载均衡-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -157,6 +175,18 @@
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
+            <version>2.2.47</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models-jakarta</artifactId>
+            <version>2.2.47</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

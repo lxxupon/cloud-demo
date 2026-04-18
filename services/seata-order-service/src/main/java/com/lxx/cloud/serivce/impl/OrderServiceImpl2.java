@@ -1,11 +1,10 @@
-package com.lxx.order.service.impl;
+package com.lxx.cloud.serivce.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.google.common.collect.Lists;
+import com.lxx.cloud.serivce.OrderService2;
 import com.lxx.order.entity.Order;
-import com.lxx.order.feign.ProductFeginClient;
-import com.lxx.order.service.OrderService;
 import com.lxx.product.entity.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl2 implements OrderService2 {
 
     @Autowired
     private DiscoveryClient discoveryClient;

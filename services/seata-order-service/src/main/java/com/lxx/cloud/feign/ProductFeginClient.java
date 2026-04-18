@@ -1,6 +1,6 @@
-package com.lxx.order.feign;
+package com.lxx.cloud.feign;
 
-import com.lxx.order.feign.fallback.ProductFeginClientFallBack;
+import com.lxx.cloud.feign.fallback.ProductFeginClientFallBack;
 import com.lxx.product.entity.Product;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -9,21 +9,41 @@ spring:
       username: nacos
       password: nacos
       config:
-        import-check:
-          enabled: true
+        namespace: public
         server-addr: 127.0.0.1:8848
         username: nacos
         password: nacos
+        # 增加超时时间到 30 秒
+        timeout: 30000
+        # 增加重试次数
+        max-retry: 20
+        # 增加长轮询超时
+        config-long-poll-timeout: 60000
+        # 增加重试间隔
+        config-retry-time: 5000
+        # 启用远程同步配置
+        enable-remote-sync-config: true
+        # 禁用导入检查
+        import-check:
+          enabled: false
       discovery:
         server-addr: 127.0.0.1:8848
         username: nacos
         password: nacos
+        heart-beat-interval: 10000
+        heart-beat-timeout: 30000
+        # 增加 gRPC 连接超时时间
+        grpc-timeout: 30000
+        # 增加连接重试次数
+        max-retry: 5
+        # 增加重试间隔
+        retry-timeout: 2000
   config:
-    import:
-      - optional:nacos:datasource.yaml
-      - optional:nacos:${spring.application.name}-mysql.yaml?group=storage
-      - optional:nacos:seata-common.yaml
-
+    import: # Spring Boot 3.x 默认是并行拉取 ，没有找办法解决文件之间前后配置依赖的问题！！！，先统一配置到一个文件中
+      #      - nacos:datasource.yaml
+      - nacos:${spring.application.name}-mysql.yaml?group=storage
+      - nacos:${spring.application.name}-plm.yaml
+      - nacos:common-springdoc.yaml
 
 # ========================mybatis===================
 mybatis:
@@ -37,5 +57,7 @@ logging:
   level:
     com.alibaba.druid: DEBUG
     com.mysql: DEBUG
-    com.alibaba.nacos.client: DEBUG
-    com.alibaba.cloud.nacos: DEBUG
+#    com.alibaba.nacos.client: DEBUG
+#    com.alibaba.cloud.nacos: DEBUG
+#    io.seata: DEBUG
+#    org.apache.seata: DEBUG

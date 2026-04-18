@@ -1,4 +1,4 @@
-package com.lxx.order.controller;
+package com.lxx.cloud.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.google.common.collect.Lists;

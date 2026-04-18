@@ -1,4 +1,4 @@
-package com.lxx.order.exception;
+package com.lxx.cloud.exception;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;

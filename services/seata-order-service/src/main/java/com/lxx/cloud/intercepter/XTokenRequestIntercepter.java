@@ -1,4 +1,4 @@
-package com.lxx.order.intercepter;
+package com.lxx.cloud.intercepter;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

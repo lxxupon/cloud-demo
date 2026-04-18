@@ -1,7 +1,7 @@
-package com.lxx.order.feign.fallback;
+package com.lxx.cloud.feign.fallback;
 import java.math.BigDecimal;
 
-import com.lxx.order.feign.ProductFeginClient;
+import com.lxx.cloud.feign.ProductFeginClient;
 import com.lxx.product.entity.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

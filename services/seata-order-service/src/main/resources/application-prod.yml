@@ -1,16 +1,64 @@
 server:
-  port: 9000
+  port: 2001
+
 spring:
   application:
-    name: service-order
+    name: seata-order-service
   cloud:
     nacos:
-      server-addr: 127.0.0.1:8848
-      user-name: nacos
+      username: nacos
       password: nacos
       config:
-        namespace: prod
+        namespace: public
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+        # 增加超时时间到 30 秒
+        timeout: 30000
+        # 增加重试次数
+        max-retry: 20
+        # 增加长轮询超时
+        config-long-poll-timeout: 60000
+        # 增加重试间隔
+        config-retry-time: 5000
+        # 启用远程同步配置
+        enable-remote-sync-config: true
+        # 禁用导入检查
+        import-check:
+          enabled: false
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+        heart-beat-interval: 10000
+        heart-beat-timeout: 30000
+        # 增加 gRPC 连接超时时间
+        grpc-timeout: 30000
+        # 增加连接重试次数
+        max-retry: 5
+        # 增加重试间隔
+        retry-timeout: 2000
   config:
-    import:
-      - nacos:common.properties?group=order
-      - optional:nacos:database.properties?group=order
+    import: # Spring Boot 3.x 默认是并行拉取 ，没有找办法解决文件之间前后配置依赖的问题！！！，先统一配置到一个文件中
+      #      - nacos:datasource.yaml
+      - nacos:${spring.application.name}-mysql.yaml?group=order
+      - nacos:${spring.application.name}-plm.yaml
+      - nacos:common-springdoc.yaml
+
+# ========================mybatis===================
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.lxx.cloud.entities
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+
+logging:
+  level:
+    com.alibaba.druid: DEBUG
+    com.mysql: DEBUG
+#    com.alibaba.nacos.client: DEBUG
+#    com.alibaba.cloud.nacos: DEBUG
+#    io.seata: DEBUG
+#    org.apache.seata: DEBUG
+

@@ -1,48 +1,40 @@
+springdoc:
+  swagger-ui:
+    # 开启 Swagger UI
+    enabled: true
+    # 配置多服务聚合
+    urls:
+      - name: 账户服务
+        url: /seata-account-service/v3/api-docs
+      - name: 订单服务
+        url: /seata-order-service/v3/api-docs
+      - name: 库存服务
+        url: /seata-storage-service/v3/api-docs
+
 spring:
   cloud:
     gateway:
       server:
         webflux:
-          globalcors: #跨域配置
-            cors-configurations:
-              '[/**]':
-                allowed-origin-patterns: '*'
-                allowed-headers: '*'
-                allowed-methods: '*'
-          default-filters: # 默认过滤器，与global过滤器的区别？
-            - AddResponseHeader=X-Response-Default-Red, Default-Blue
           routes:
-            - id: bing-route
-              uri: https://cn.bing.com
-              predicates: # 多个匹配条件时，多个条件之间是and关系
-                - name: Path
-                  args:
-                    pattern: /search
-                - name: Query
-                  args:
-                    param: q
-                    regexp: haha
-                - Vip=user,lxxupon
-              order: 100
-            - id: order-route
-              uri: lb://service-order
+            - id: seata-account-swagger
+              uri: lb://seata-account-service
               predicates:
-                - name: Path
-                  args:
-                    pattern: /api/order/**
-                    matchTrailingSlash: true # 是否匹配尾部斜杠
+                - Path=/seata-account-service/v3/api-docs/**
               filters:
-                - name: RewritePath # 路径重写过滤器
-                  args:
-                    regexp: /api/order/?(?<segment>.*)
-                    replacement: /$\{segment}
-                - AddResponseHeader=X-Response-STR, 123
-                - OnceToken=X-Response-Token, uuid
+                - RewritePath=/seata-account-service/(?<segment>.*), /$\{segment}
               order: 0
-            - id: product-route
-              uri: lb://service-product
+            - id: seata-order-route
+              uri: lb://seata-order-service
               predicates:
-                - Path=/api/product/**
-              order: 0
+                - Path=/seata-order-service/v3/api-docs/**
               filters:
-                - RewritePath=/api/product/?(?<segment>.*), /$\{segment}
+                - RewritePath=/seata-order-service/(?<segment>.*), /$\{segment}
+              order: 0
+            - id: seata-storage-route
+              uri: lb://seata-storage-service
+              predicates:
+                - Path=/seata-storage-service/v3/api-docs/**
+              filters:
+                - RewritePath=/seata-storage-service/(?<segment>.*), /$\{segment}
+              order: 0
