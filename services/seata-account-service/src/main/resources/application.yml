@@ -1,6 +1,15 @@
 server:
   port: 2003
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
 spring:
   application:
     name: seata-account-service

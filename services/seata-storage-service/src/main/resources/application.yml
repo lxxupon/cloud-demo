@@ -1,6 +1,15 @@
 server:
   port: 2002
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
 spring:
   application:
     name: seata-storage-service

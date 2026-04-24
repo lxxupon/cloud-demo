@@ -11,6 +11,7 @@ spring:
                 allowed-methods: '*'
           default-filters: # 默认过滤器，与global过滤器的区别？
             - AddResponseHeader=X-Response-Default-Red, Default-Blue
+          # 在 Spring Cloud Gateway 中，当多个 profile 都定义了 routes 列表时，后加载的 profile 会完全覆盖先加载的 routes 列表，而不是追加,将所有路由合并到一个文件中（推荐）
           routes:
 #            - id: bing-route
 #              uri: https://cn.bing.com
@@ -107,3 +108,32 @@ spring:
                 - AddResponseHeader=X-Response-STR, 123
                 - OnceToken=X-Response-Token, uuid
               order: 0
+            # Swagger 文档路由
+            - id: seata-product-swagger
+              uri: lb://seata-product-service
+              predicates:
+                - Path=/seata-product-service/v3/api-docs/**
+              filters:
+                - RewritePath=/seata-product-service/(?<segment>.*), /$\{segment}
+              order: 1
+            - id: seata-account-swagger
+              uri: lb://seata-account-service
+              predicates:
+                - Path=/seata-account-service/v3/api-docs/**
+              filters:
+                - RewritePath=/seata-account-service/(?<segment>.*), /$\{segment}
+              order: 1
+            - id: seata-order-swagger
+              uri: lb://seata-order-service
+              predicates:
+                - Path=/seata-order-service/v3/api-docs/**
+              filters:
+                - RewritePath=/seata-order-service/(?<segment>.*), /$\{segment}
+              order: 1
+            - id: seata-storage-swagger
+              uri: lb://seata-storage-service
+              predicates:
+                - Path=/seata-storage-service/v3/api-docs/**
+              filters:
+                - RewritePath=/seata-storage-service/(?<segment>.*), /$\{segment}
+              order: 1

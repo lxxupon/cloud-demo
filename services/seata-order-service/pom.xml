@@ -24,7 +24,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        &lt;!&ndash;hutool&ndash;&gt;-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--        &lt;!&ndash;hutool&ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>cn.hutool</groupId>-->
 <!--            <artifactId>hutool-all</artifactId>-->

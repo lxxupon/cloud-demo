@@ -1,6 +1,6 @@
 spring:
   profiles:
-    include: route,swagger
+    include: route
   application:
     name: gateway
   cloud:
@@ -13,3 +13,32 @@ spring:
 
 server:
   port: 6600
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    access:
+      # 当值为 none 时，所有端点都将被禁用
+      # read-only 是最佳实践，能确保端点仅提供安全的信息读取
+      # unrestricted 代表完全允许，可执行读写操作。
+      default: none
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  swagger-ui:
+    # 开启 Swagger UI
+    enabled: true
+    # 配置多服务聚合
+    urls:
+      - name: 账户服务
+        url: /seata-account-service/v3/api-docs
+      - name: 订单服务
+        url: /seata-order-service/v3/api-docs
+      - name: 库存服务
+        url: /seata-storage-service/v3/api-docs
+      - name: 产品服务
+        url: /seata-product-service/v3/api-docs
