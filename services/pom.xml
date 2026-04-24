@@ -30,16 +30,16 @@
 
     <dependencies>
         <!-- 1. Spring Data Redis，默认使用 Lettuce 客户端 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--        </dependency>-->
         <!-- 2. Redisson Starter，用于分布式锁等高级功能 -->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>${redisson.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.redisson</groupId>-->
+<!--            <artifactId>redisson-spring-boot-starter</artifactId>-->
+<!--            <version>${redisson.version}</version>-->
+<!--        </dependency>-->
 
         <!-- 该依赖 javax.persistence:persistence-api 是 JPA (Java Persistence API) 的规范接口包。
              它定义了持久化相关的注解（如 @Entity, @Table, @Id 等）和核心接口。
@@ -110,10 +110,22 @@
         </dependency>
 
 
-        <!-- 分布式事务 -->
+        <!-- 分布式事务: 排除内置seata，使用独立的seata-spring-boot-starter -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.seata</groupId>
+                    <artifactId>seata-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
+            <version>${seata.version}</version>
         </dependency>
 
         <!-- 服务发现-->

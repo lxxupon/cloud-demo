@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mirco_gateway:
+    image: gateway-img:1.0
+    container_name: mirco_gateway
+    restart: on-failure:3
+    privileged: false
+    ports:
+      - "6600:6600"
+    environment:
+      JVM_XMX: "1024m"
+      JVM_XMS: "512m"
+      NACOS_SERVICE_IP: nacos3
+    networks:
+      - docker_mynetwork
+
+networks:
+  docker_mynetwork:
+    external: true

@@ -3,6 +3,7 @@ package com.lxx.cloud.serivce.impl;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.google.common.collect.Lists;
+import com.lxx.cloud.feign.ProductFeginClient;
 import com.lxx.cloud.serivce.OrderService2;
 import com.lxx.order.entity.Order;
 import com.lxx.product.entity.Product;
@@ -57,6 +58,7 @@ public class OrderServiceImpl2 implements OrderService2 {
 
     // 兜底回调
     public Order createOrderFallback(Long productId, Long userId, BlockException e) {
+        log.info("createOrder 兜底回调了。。。productId:{}, userId:{}", productId, userId);
         Order order = new Order();
         order.setId(0L);
         order.setTotalAmount(new BigDecimal("0"));

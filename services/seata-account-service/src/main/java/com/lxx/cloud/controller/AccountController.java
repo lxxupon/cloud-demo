@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ public class AccountController {
      * 扣减账户余额
      */
     @Operation(summary = "扣减账户余额", description = "扣减账户余额")
-    @RequestMapping("/account/decrease")
+    @GetMapping("/account/decrease")
     public ResultData decrease(@Parameter(description = "用户 ID", required = true, example = "1001")
                                @RequestParam("userId") Long userId,
                                @Parameter(description = "金额", required = true, example = "50")

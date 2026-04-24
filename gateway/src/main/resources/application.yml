@@ -5,7 +5,7 @@ spring:
     name: gateway
   cloud:
     nacos:
-      server-addr: 127.0.0.1:8848
+      server-addr: ${NACOS_SERVICE_IP:127.0.0.1}:${NACOS_SERVICE_PORT:8848}
       username: nacos
       password: nacos
       config:

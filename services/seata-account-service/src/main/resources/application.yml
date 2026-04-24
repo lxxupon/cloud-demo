@@ -6,9 +6,6 @@ spring:
     name: seata-account-service
   cloud:
     nacos:
-      username: nacos
-      password: nacos
-      server-addr: 127.0.0.1:8848
       config:
         namespace: public
         server-addr: 127.0.0.1:8848
@@ -46,6 +43,9 @@ spring:
       - nacos:${spring.application.name}-mysql.yaml?group=account
       - nacos:${spring.application.name}-plm.yaml
       - nacos:common-springdoc.yaml
+  seata:
+    # 【关键】事务组名称，必须与服务端配置的 vgroupMapping 前缀对应
+    tx-service-group: default_tx_group
 
 # ========================mybatis===================
 mybatis:
@@ -63,3 +63,8 @@ logging:
 #    com.alibaba.cloud.nacos: DEBUG
 #    io.seata: DEBUG
 #    org.apache.seata: DEBUG
+
+
+
+
+

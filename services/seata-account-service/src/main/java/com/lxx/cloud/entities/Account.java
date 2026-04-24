@@ -1,5 +1,6 @@
 package com.lxx.cloud.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -12,12 +13,14 @@ import java.io.Serializable;
  * @auther lxx
  * @create 2026-04-08 16:13
  */
+@Schema(description = "账户实体", title = "Account")
 @Table(name = "t_account")
 @ToString
 public class Account implements Serializable {
     /**
      * id
      */
+    @Schema(description = "账户ID", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     @Id
     @GeneratedValue(generator = "JDBC")
     private Long id;
@@ -25,22 +28,26 @@ public class Account implements Serializable {
     /**
      * 用户id
      */
+    @Schema(description = "用户ID", example = "1001", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "user_id")
     private Long userId;
 
     /**
      * 总额度
      */
+    @Schema(description = "总额度", example = "100000")
     private Long total;
 
     /**
      * 已用余额
      */
+    @Schema(description = "已用余额", example = "5000")
     private Long used;
 
     /**
      * 剩余可用额度
      */
+    @Schema(description = "剩余可用额度", example = "95000")
     private Long residue;
 
     /**

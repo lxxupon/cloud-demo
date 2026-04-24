@@ -6,8 +6,6 @@ spring:
     name: seata-storage-service
   cloud:
     nacos:
-      username: nacos
-      password: nacos
       config:
         namespace: public
         server-addr: 127.0.0.1:8848

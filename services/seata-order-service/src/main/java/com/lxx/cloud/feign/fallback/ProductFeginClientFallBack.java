@@ -16,7 +16,7 @@ public class ProductFeginClientFallBack implements ProductFeginClient {
 
     @Override
     public Product getProductById(Long id) {
-        log.info("兜底回调方法。。。。。。。");
+        log.info("fegin 查询产品服务，兜底回调方法。。。。。。。");
         Product product = new Product();
         product.setId(9999999L);
         product.setPrice(new BigDecimal("99999"));

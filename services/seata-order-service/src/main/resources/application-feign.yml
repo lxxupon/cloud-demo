@@ -18,32 +18,32 @@ spring:
 #            - com.lxx.order.intercepter.XTokenRequestIntercepter
     sentinel:
       transport:
-        dashboard: localhost:8099  # Sentinel控制台地址
+        dashboard: localhost:8858  # Sentinel控制台地址
         port: 8719 # 应用端监听端口（与控制台通信），不同应用不一样
       datasource:
         flow-rule: #流控规则管理(这个名称可以自定义)
           nacos: # 告诉sentinel用nacos作为数据源
-            data-id: sentinel-flow-config.json #nacos配置中心里执行文件的dataId
+            data-id: ${spring.application.name}-flow-rules.json #nacos配置中心里执行文件的dataId
             namespace: ${spring.cloud.nacos.config.namespace}
-            server-addr: ${spring.cloud.nacos.server-addr} #nacos的地址
-            username: ${spring.cloud.nacos.username} #nacos的用户名
-            password: ${spring.cloud.nacos.password} #nacos的密码
+            server-addr: ${spring.cloud.nacos.config.server-addr} #nacos的地址
+            username: ${spring.cloud.nacos.config.username} #nacos的用户名
+            password: ${spring.cloud.nacos.config.password} #nacos的密码
             rule-type: flow #指定文件配置的是哪种规则 flow-流控,degrade-熔断,param-flow热点参数,system-系统保护,authority-授权,gw-flow gateway网关流控,gw-api-group
         degrade-rule: #降级规则管理(这个名称可以自定义)
           nacos: # 告诉sentinel用nacos作为数据源
-            data-id: sentinel-degrade-config.json #nacos配置中心里执行文件的dataId
+            data-id: ${spring.application.name}-degrade-rules.json #nacos配置中心里执行文件的dataId
             namespace: ${spring.cloud.nacos.config.namespace}
-            server-addr: ${spring.cloud.nacos.server-addr} #nacos的地址
-            username: ${spring.cloud.nacos.username} #nacos的用户名
-            password: ${spring.cloud.nacos.password} #nacos的密码
+            server-addr: ${spring.cloud.nacos.config.server-addr} #nacos的地址
+            username: ${spring.cloud.nacos.config.username} #nacos的用户名
+            password: ${spring.cloud.nacos.config.password} #nacos的密码
             rule-type: degrade #指定文件配置的是哪种规则
         param-flow-rule: #热点规则管理(这个名称可以自定义)
           nacos: # 告诉sentinel用nacos作为数据源
-            data-id: sentinel-param-flow-config.json #nacos配置中心里执行文件的dataId
+            data-id: ${spring.application.name}-flow-rules.json #nacos配置中心里执行文件的dataId
             namespace: ${spring.cloud.nacos.config.namespace}
-            server-addr: ${spring.cloud.nacos.server-addr} #nacos的地址
-            username: ${spring.cloud.nacos.username} #nacos的用户名
-            password: ${spring.cloud.nacos.password} #nacos的密码
+            server-addr: ${spring.cloud.nacos.config.server-addr} #nacos的地址
+            username: ${spring.cloud.nacos.config.username} #nacos的用户名
+            password: ${spring.cloud.nacos.config.password} #nacos的密码
             rule-type: param-flow #指定文件配置的是哪种规则
       eager: true
       web-context-unify: false

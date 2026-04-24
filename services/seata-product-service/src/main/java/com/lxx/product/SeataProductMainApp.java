@@ -6,9 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient // 开启服务发现功能
 @SpringBootApplication
-public class ProductMainApplication {
+public class SeataProductMainApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProductMainApplication.class, args);
+        SpringApplication.run(SeataProductMainApp.class, args);
     }
 }

@@ -10,6 +10,8 @@ springdoc:
         url: /seata-order-service/v3/api-docs
       - name: 库存服务
         url: /seata-storage-service/v3/api-docs
+      - name: 产品服务
+        url: /seata-product-service/v3/api-docs
 
 spring:
   cloud:
@@ -17,6 +19,13 @@ spring:
       server:
         webflux:
           routes:
+            - id: seata-product-swagger
+              uri: lb://seata-product-service
+              predicates:
+                - Path=/seata-product-service/v3/api-docs/**
+              filters:
+                - RewritePath=/seata-product-service/(?<segment>.*), /$\{segment}
+              order: 0
             - id: seata-account-swagger
               uri: lb://seata-account-service
               predicates:

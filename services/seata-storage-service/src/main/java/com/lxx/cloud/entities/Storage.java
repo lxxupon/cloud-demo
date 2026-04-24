@@ -1,5 +1,6 @@
 package com.lxx.cloud.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -11,32 +12,38 @@ import java.io.Serializable;
 /**
  * 表名：t_storage
  */
+@Schema(description = "库存实体", title = "Storage")
 @Table(name = "t_storage")
 @ToString
 public class Storage implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
+    @Schema(description = "库存ID", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
     /**
      * 产品id
      */
+    @Schema(description = "产品ID", example = "100", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "product_id")
     private Long productId;
 
     /**
      * 总库存
      */
+    @Schema(description = "总库存", example = "1000")
     private Integer total;
 
     /**
      * 已用库存
      */
+    @Schema(description = "已用库存", example = "200")
     private Integer used;
 
     /**
      * 剩余库存
      */
+    @Schema(description = "剩余库存", example = "800")
     private Integer residue;
 
     /**
